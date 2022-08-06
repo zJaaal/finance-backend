@@ -2,7 +2,7 @@ import client from "../../database/knex";
 import { UserRegister } from "../validations/types";
 
 const find = (email: string) =>
-  client.select("email", "password").from("users").where({
+  client.select().from("users").where({
     email: email,
   });
 
