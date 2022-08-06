@@ -18,7 +18,8 @@ const validateSchemas =
 
       next();
     } catch (e) {
-      const error = /[^\"]+(\w)+[^\"]/g.exec(e.message.split(" ")[0])[0];
+      const error = /(?<=\")(.*?)(?=\")/g.exec(e.message)[0];
+      console.log(error);
 
       res.status(400).json({
         status: "An error occured",
