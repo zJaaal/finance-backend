@@ -1,5 +1,5 @@
 import bcrypt from "bcryptjs";
-import jwt from "jsonwebtoken";
+import jwt = require("jsonwebtoken");
 
 const encryptPassword = async (password: string) => {
   try {
@@ -10,6 +10,10 @@ const encryptPassword = async (password: string) => {
   } catch (error) {
     console.log(error);
   }
+};
+
+const comparePassword = async (userPassword: string, toCompare: string) => {
+  return await bcrypt.compare(userPassword, toCompare);
 };
 
 const generateJWT = (uid: number, name: string): Promise<string> =>
@@ -24,7 +28,7 @@ const generateJWT = (uid: number, name: string): Promise<string> =>
       {
         expiresIn: "2h",
       },
-      (error: jwt.error, token: jwt.token) => {
+      (error: jwt.JsonWebTokenError, token: string) => {
         if (error) {
           console.log(error);
           rej("Couldn't generate token. Please contact an Admin");
@@ -33,4 +37,8 @@ const generateJWT = (uid: number, name: string): Promise<string> =>
     );
   });
 
-export const cryptRepository = { encryptPassword, generateJWT };
+export const cryptRepository = {
+  encryptPassword,
+  generateJWT,
+  comparePassword,
+};
