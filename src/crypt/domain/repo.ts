@@ -16,10 +16,10 @@ const comparePassword = async (userPassword: string, toCompare: string) => {
   return await bcrypt.compare(userPassword, toCompare);
 };
 
-const generateJWT = (uid: number, name: string): Promise<string> =>
+const generateJWT = (iduser: number, name: string): Promise<string> =>
   new Promise((res, rej) => {
     const payload = {
-      uid,
+      iduser,
       name,
     };
     jwt.sign(

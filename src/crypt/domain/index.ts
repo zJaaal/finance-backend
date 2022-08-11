@@ -10,9 +10,9 @@ const comparePassword = async (userPassword: string, toCompare: string) => {
   return await cryptRepository.comparePassword(userPassword, toCompare);
 };
 
-const generateJWT = async (uid: number, name: string) => {
-  if (uid < 0) return Promise.resolve(null);
-  return await cryptRepository.generateJWT(uid, name);
+const generateJWT = async (iduser: number, name: string) => {
+  if (iduser < 0) return Promise.resolve(null);
+  return await cryptRepository.generateJWT(iduser, name);
 };
 
 export const crypt = {

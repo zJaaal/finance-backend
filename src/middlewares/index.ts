@@ -12,12 +12,15 @@ const validateSchemas =
     next: express.NextFunction
   ) => {
     try {
-      const newBody: T = await schema.validateAsync(req.body);
+      const newBody: T = await schema.validateAsync(req.body, {
+        stripUnknown: true,
+      });
 
       req.body = { ...newBody };
 
       next();
     } catch (e) {
+      console.log(e);
       const error = /(?<=\")(.*?)(?=\")/g.exec(e.message)[0];
 
       res.status(400).json({
@@ -42,12 +45,12 @@ const validateJWT = (
   }
 
   try {
-    const { uid, name } = jwt.verify(
+    const { iduser, name } = jwt.verify(
       token as string,
       process.env.SECRET_KEY
     ) as JwtPayload;
 
-    req.body.uid = uid;
+    req.body.iduser = iduser;
     req.body.name = name;
   } catch (error) {
     return res.status(400).json({
