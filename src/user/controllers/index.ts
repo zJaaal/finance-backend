@@ -5,7 +5,7 @@ import { User } from "../domain";
 const login = async (req: express.Request, res: express.Response) => {
   try {
     const userFinded = await User.find(req.body.email);
-    if (!userFinded.length) {
+    if (!userFinded) {
       return res.status(401).json({
         status: "Error",
         ErrorMessage: "Email and password doesn't match to an user",
@@ -14,7 +14,7 @@ const login = async (req: express.Request, res: express.Response) => {
 
     const isPassword = await crypt.comparePassword(
       req.body.password,
-      userFinded[0].password
+      userFinded.password
     );
 
     if (!isPassword) {
@@ -25,13 +25,13 @@ const login = async (req: express.Request, res: express.Response) => {
     }
 
     const token = await crypt.generateJWT(
-      userFinded[0].iduser,
-      userFinded[0].username
+      userFinded.iduser,
+      userFinded.username
     );
 
     res.status(201).json({
-      uid: userFinded[0].iduser,
-      username: userFinded[0].username,
+      uid: userFinded.iduser,
+      username: userFinded.username,
       token: token,
     });
   } catch (error) {
@@ -46,7 +46,7 @@ const login = async (req: express.Request, res: express.Response) => {
 const create = async (req: express.Request, res: express.Response) => {
   try {
     const userFinded = await User.find(req.body.email);
-    if (userFinded.length) {
+    if (userFinded) {
       return res.status(401).json({
         status: "Error",
         ErrorMessage: "An user already exist with that email",
@@ -60,11 +60,11 @@ const create = async (req: express.Request, res: express.Response) => {
       password: encryptedPassword,
     });
 
-    const token = await crypt.generateJWT(user[0].iduser, user[0].username);
+    const token = await crypt.generateJWT(user.iduser, user.username);
 
     res.status(201).json({
-      uid: user[0].iduser,
-      username: user[0].username,
+      uid: user.iduser,
+      username: user.username,
       token: token,
     });
   } catch (error) {
