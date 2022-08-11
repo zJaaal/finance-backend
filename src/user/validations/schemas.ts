@@ -2,7 +2,7 @@ import joi from "joi";
 import { UserLogin, UserRegister } from "./types";
 
 export const userRegisterSchema: joi.ObjectSchema<UserRegister> = joi.object({
-  username: joi.string().min(4).max(20).required(),
+  username: joi.string().min(4).max(20).alphanum().required(),
   email: joi.string().email().required(),
   password: joi
     .string()
