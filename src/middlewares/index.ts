@@ -2,19 +2,28 @@ import joi from "joi";
 import express from "express";
 import JoiErrors from "../types/JoiErrors";
 import jwt, { JsonWebTokenError, JwtPayload } from "jsonwebtoken";
+import { JoiAlter } from "../types/JoiAlter";
 require("dotenv").config();
 
 const validateSchemas =
-  <T>(schema: joi.ObjectSchema<T>) =>
+  <T>(schema: joi.ObjectSchema<T>, type: JoiAlter = JoiAlter.default) =>
   async (
     req: express.Request,
     res: express.Response,
     next: express.NextFunction
   ) => {
     try {
-      const newBody: T = await schema.validateAsync(req.body, {
-        stripUnknown: true,
-      });
+      let newBody = {};
+
+      if (type.length) {
+        newBody = await schema.tailor(type).validateAsync(req.body, {
+          stripUnknown: true,
+        });
+      } else {
+        newBody = await schema.validateAsync(req.body, {
+          stripUnknown: true,
+        });
+      }
 
       req.body = { ...newBody };
 
