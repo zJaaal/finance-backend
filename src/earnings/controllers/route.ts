@@ -11,23 +11,28 @@ import { Earning, EarningIds, EarningListPerPage } from "../validations/types";
 
 const earning = express.Router();
 
+//Initialization of create endpoint
 earning.post(
   "/",
   Middlewares.validateSchemas<Earning>(earningSchema),
   EarningController.create
 );
+
+//Initialization of listPerPage endpoint
 earning.get(
   "/",
   Middlewares.validateSchemas<EarningListPerPage>(earningListPerPageSchema),
   EarningController.listPerPage
 );
 
+//Initialization of update endpoint
 earning.put(
   "/",
   Middlewares.validateSchemas<Earning>(earningSchema, JoiAlter.put),
   EarningController.update
 );
 
+//Initialization of delete endpoint
 earning.delete(
   "/",
   Middlewares.validateSchemas<EarningIds>(earningIdsSchema),

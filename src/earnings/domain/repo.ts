@@ -1,9 +1,13 @@
 import client from "../../database/knex";
-import earning from "../controllers/route";
 import { Earning, EarningIds } from "../validations/types";
 
 const limit = 10;
 
+/**
+ * @description This function adds to the database a row to earnings table
+ * @param {Earning} earning
+ * @returns
+ */
 const create = (earning: Earning) =>
   client
     .insert({ ...earning })
@@ -19,6 +23,14 @@ const create = (earning: Earning) =>
         .first()
     );
 
+/**
+ * @description This function retrieves a list of earnings based on filters
+ * @param {number} iduser //Identity of user
+ * @param {number} page //# of page he is on
+ * @param {string} keyword //A Keyword for title and description
+ * @param {string} date // A date (This might change to from and ill add a until param for date ranges)
+ * @returns
+ */
 const listPerPage = (
   iduser: number,
   page: number,
@@ -47,6 +59,11 @@ const listPerPage = (
   return listPerPage;
 };
 
+/**
+ * @description This function updates an earning on the database
+ * @param {Earning} earning
+ * @returns
+ */
 const update = (earning: Earning) =>
   client
     .from("earnings")
@@ -68,6 +85,12 @@ const update = (earning: Earning) =>
         .where({ idearnings: earning.idearnings, iduser: earning.iduser })
         .first()
     );
+
+/**
+ * @description This function erase an earning from the database
+ * @param {EarningIds} earningIds
+ * @returns
+ */
 const erase = (earningIds: EarningIds) =>
   client
     .from("earnings")

@@ -2,11 +2,18 @@ import express from "express";
 import { Earnings } from "../domain";
 import { Earning } from "../validations/types";
 
+/**
+ * @description This function is the final action of create endpoint it takes
+ *              the body of the Request and adds a new earning in the database
+ * @param req
+ * @param res
+ * @returns
+ */
 const create = async (req: express.Request, res: express.Response) => {
   try {
     const newEarning: Earning = await Earnings.create(req.body);
 
-    return res.status(201).json({
+    res.status(201).json({
       status: "Completed",
       ...newEarning,
     });
@@ -19,6 +26,13 @@ const create = async (req: express.Request, res: express.Response) => {
   }
 };
 
+/**
+ * @description This function takes the request body to retrieve a list of
+ *               coincidences on earnings table based on the filters
+ * @param req
+ * @param res
+ * @returns
+ */
 const listPerPage = async (req: express.Request, res: express.Response) => {
   try {
     const data: Earning[] = await Earnings.listPerPage(
@@ -29,15 +43,14 @@ const listPerPage = async (req: express.Request, res: express.Response) => {
     );
 
     if (!data.length) {
-      return res.status(404).json({
+      res.status(404).json({
         status: "Couldn't find any earnings with those parameters",
       });
-    }
-
-    return res.status(200).json({
-      status: "Completed",
-      data,
-    });
+    } else
+      res.status(200).json({
+        status: "Completed",
+        data,
+      });
   } catch (error) {
     console.log(error);
     res.status(400).json({
@@ -47,20 +60,27 @@ const listPerPage = async (req: express.Request, res: express.Response) => {
   }
 };
 
+/**
+ * @description This function takes the request body to update an Earning
+ *              if it doesn't find any earning with the information provided
+ *              it will resolve a 404
+ * @param req
+ * @param res
+ * @returns
+ */
 const update = async (req: express.Request, res: express.Response) => {
   try {
     const newEarning: Earning = await Earnings.update(req.body);
 
     if (!newEarning) {
-      return res.status(404).json({
+      res.status(404).json({
         status: "Couldn't find any earning.",
       });
-    }
-
-    return res.status(200).json({
-      status: "Completed",
-      ...newEarning,
-    });
+    } else
+      res.status(200).json({
+        status: "Completed",
+        ...newEarning,
+      });
   } catch (error) {
     console.log(error);
     res.status(400).json({
@@ -69,18 +89,26 @@ const update = async (req: express.Request, res: express.Response) => {
     });
   }
 };
+/**
+ * @description This function takes the request body to delete an Earning
+ *              if it doesn't find any earning with the information provided
+ *              it will resolver a 404
+ * @param req
+ * @param res
+ * @returns
+ */
 const erase = async (req: express.Request, res: express.Response) => {
   try {
     const deleted = await Earnings.erase(req.body);
 
     if (!deleted) {
-      return res.status(404).json({
+      res.status(404).json({
         status: "Couldn't find any Earning.",
       });
-    }
-    return res.status(200).json({
-      status: "Completed",
-    });
+    } else
+      res.status(200).json({
+        status: "Completed",
+      });
   } catch (error) {
     console.log(error);
     res.status(400).json({
