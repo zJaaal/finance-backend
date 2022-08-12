@@ -1,3 +1,6 @@
+/**
+ * @description This is the main type for Expenses
+ */
 export type Expense = {
   idexpense: number | undefined;
   iduser: number;
@@ -7,6 +10,9 @@ export type Expense = {
   amount: number;
 };
 
+/**
+ * @description This is the type for listPerPage Database action
+ */
 export type ExpenseListPerPage = {
   iduser: number;
   page: number;
@@ -14,6 +20,9 @@ export type ExpenseListPerPage = {
   date: string | null;
 };
 
+/**
+ * @description This is the type for delete Database action
+ */
 export type ExpenseIds = {
   iduser: number;
   idexpense: number;

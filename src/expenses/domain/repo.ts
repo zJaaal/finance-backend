@@ -3,6 +3,11 @@ import { Expense, ExpenseIds } from "../validations/types";
 
 const limit = 10;
 
+/**
+ * @description This function adds to the database a row to expenses table
+ * @param {Expense} expense
+ * @returns
+ */
 const create = (expense: Expense) =>
   client
     .insert({ ...expense })
@@ -18,6 +23,14 @@ const create = (expense: Expense) =>
         .first()
     );
 
+/**
+ * @description This function retrieves a list of expenses based on filters
+ * @param {number} iduser //Identity of user
+ * @param {number} page //# of page he is on
+ * @param {string} keyword //A Keyword for title and description
+ * @param {string} date // A date (This might change to from and ill add a until param for date ranges)
+ * @returns
+ */
 const listPerPage = (
   iduser: number,
   page: number,
@@ -47,6 +60,11 @@ const listPerPage = (
   return listPerPage;
 };
 
+/**
+ * @description This function updates an earning on the database
+ * @param {Expense} expense
+ * @returns
+ */
 const update = (expense: Expense) =>
   client
     .from("expenses")
@@ -72,6 +90,11 @@ const update = (expense: Expense) =>
         .first()
     );
 
+/**
+ * @description This function erase an expense from the database
+ * @param {ExpenseIds} expenseIds
+ * @returns
+ */
 const erase = (expenseIds: ExpenseIds) =>
   client
     .from("expenses")

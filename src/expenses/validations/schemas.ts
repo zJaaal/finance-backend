@@ -1,6 +1,9 @@
 import joi from "joi";
 import { Expense, ExpenseIds, ExpenseListPerPage } from "./types";
 
+/**
+ * @description This is the Joi schema for Expense main type
+ */
 export const expenseSchema: joi.ObjectSchema<Expense> = joi.object({
   idexpense: joi
     .number()
@@ -15,6 +18,9 @@ export const expenseSchema: joi.ObjectSchema<Expense> = joi.object({
   amount: joi.number().min(1).required(),
 });
 
+/**
+ * @description This is the Joi schema for ExpenselistPerPage type
+ */
 export const expenseListPerPageSchema: joi.ObjectSchema<ExpenseListPerPage> =
   joi.object({
     iduser: joi.number().min(1).required(),
@@ -23,6 +29,9 @@ export const expenseListPerPageSchema: joi.ObjectSchema<ExpenseListPerPage> =
     date: joi.string().min(10),
   });
 
+/**
+ * @description This is the Joi schema for ExpenseIds type
+ */
 export const expenseIdsSchema: joi.ObjectSchema<ExpenseIds> = joi.object({
   idexpense: joi.number().min(1).required(),
   iduser: joi.number().min(1).required(),
