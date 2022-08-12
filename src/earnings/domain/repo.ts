@@ -54,6 +54,7 @@ const update = (earning: Earning) =>
       iduser: earning.iduser,
       idearnings: earning.idearnings,
     })
+    .first()
     .update({
       title: earning.title,
       date: earning.date,
@@ -71,7 +72,9 @@ const erase = (earningIds: EarningIds) =>
   client
     .from("earnings")
     .where({ iduser: earningIds.iduser, idearnings: earningIds.idearnings })
+    .first()
     .del();
+
 export const EarningRepository = {
   create,
   listPerPage,
