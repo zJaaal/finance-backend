@@ -1,5 +1,9 @@
 import knex, { Knex } from "knex";
 require("dotenv").config();
+
+/**
+ * @description This file contains the initialization of knex instance
+ */
 const config = {
   client: "mysql2",
   connection: {
