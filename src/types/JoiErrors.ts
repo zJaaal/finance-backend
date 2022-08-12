@@ -10,6 +10,8 @@ enum JoiErrors {
   "amount" = "Amount is invalid",
   "iduser" = "ID User is invalid",
   "idearning" = "ID Earning is invalid",
+  "idexpense" = "ID Expense is invalid",
+  "page" = "Page is invalid",
 }
 
 export default JoiErrors;
