@@ -1,5 +1,4 @@
 import { Helpers } from "../../helpers";
-import earning from "../controllers/route";
 import { Earning, EarningIds } from "../validations/types";
 import { EarningRepository } from "./repo";
 
