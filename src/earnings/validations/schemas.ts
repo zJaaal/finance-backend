@@ -2,7 +2,12 @@ import joi from "joi";
 import { Earning, EarningIds, EarningListPerPage } from "./types";
 
 export const earningSchema: joi.ObjectSchema<Earning> = joi.object({
-  idearnings: joi.number().min(1),
+  idearnings: joi
+    .number()
+    .min(1)
+    .alter({
+      put: (schema) => schema.required(),
+    }),
   iduser: joi.number().min(1).required(),
   title: joi.string().min(4).max(255).required(),
   description: joi.string().min(0).max(500),
@@ -10,7 +15,7 @@ export const earningSchema: joi.ObjectSchema<Earning> = joi.object({
   amount: joi.number().min(1).required(),
 });
 
-export const earningListPerPage: joi.ObjectSchema<EarningListPerPage> =
+export const earningListPerPageSchema: joi.ObjectSchema<EarningListPerPage> =
   joi.object({
     iduser: joi.number().min(1).required(),
     page: joi.number().min(1).required(),
@@ -18,7 +23,7 @@ export const earningListPerPage: joi.ObjectSchema<EarningListPerPage> =
     date: joi.string().min(10),
   });
 
-export const earningIds: joi.ObjectSchema<EarningIds> = joi.object({
+export const earningIdsSchema: joi.ObjectSchema<EarningIds> = joi.object({
   idearnings: joi.number().min(1).required(),
   iduser: joi.number().min(1).required(),
 });
