@@ -1,5 +1,3 @@
-import { number } from "joi";
-
 export type Earning = {
   idearnings: number | undefined;
   iduser: number;
