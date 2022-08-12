@@ -1,9 +1,17 @@
 import joi from "joi";
-import express from "express";
+import express, { RequestHandler } from "express";
 import JoiErrors from "../types/JoiErrors";
 import jwt, { JsonWebTokenError, JwtPayload } from "jsonwebtoken";
 import { JoiAlter } from "../types/JoiAlter";
 require("dotenv").config();
+
+/**
+ * @description This function takes a joi schema and JoiAlter type and works as a middleware to validate
+ *              the data before its send to the endpoint
+ * @param {joi.ObjectSchema<T>} schema
+ * @param {JoiAlter} type
+ * @returns Express request
+ */
 
 const validateSchemas =
   <T>(schema: joi.ObjectSchema<T>, type: JoiAlter = JoiAlter.default) =>
@@ -38,6 +46,14 @@ const validateSchemas =
       });
     }
   };
+
+/**
+ * @description This function works as a middleware to validate the JWT in the request headers
+ * @param req
+ * @param res
+ * @param next
+ * @returns
+ */
 
 const validateJWT = (
   req: express.Request,
