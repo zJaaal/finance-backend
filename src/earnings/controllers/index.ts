@@ -28,6 +28,12 @@ const listPerPage = async (req: express.Request, res: express.Response) => {
       req.body.date
     );
 
+    if (!data.length) {
+      return res.status(404).json({
+        status: "Couldn't find any earnings with those parameters",
+      });
+    }
+
     return res.status(200).json({
       status: "Completed",
       data,
@@ -45,7 +51,13 @@ const update = async (req: express.Request, res: express.Response) => {
   try {
     const newEarning: Earning = await Earnings.update(req.body);
 
-    res.status(200).json({
+    if (!newEarning) {
+      return res.status(404).json({
+        status: "Couldn't find any earning.",
+      });
+    }
+
+    return res.status(200).json({
       status: "Completed",
       ...newEarning,
     });
@@ -59,8 +71,14 @@ const update = async (req: express.Request, res: express.Response) => {
 };
 const erase = async (req: express.Request, res: express.Response) => {
   try {
-    const deletedEarning = await Earnings.erase(req.body);
-    res.status(200).json({
+    const deleted = await Earnings.erase(req.body);
+
+    if (!deleted) {
+      return res.status(404).json({
+        status: "Couldn't find any Earning.",
+      });
+    }
+    return res.status(200).json({
       status: "Completed",
     });
   } catch (error) {
