@@ -2,6 +2,14 @@ import express from "express";
 import { crypt } from "../../crypt/domain";
 import { User } from "../domain";
 
+/**
+ * @description This function is the final action of login endpoint it takes the body of the Request
+ *              and look for a coincidence in the database if an user is found, generates a JWT and resolves it
+ * @param req
+ * @param res
+ * @returns
+ */
+
 const login = async (req: express.Request, res: express.Response) => {
   try {
     const userFinded = await User.find(req.body.email);
@@ -42,7 +50,14 @@ const login = async (req: express.Request, res: express.Response) => {
     });
   }
 };
-
+/**
+ * @description This function is the final action of register endpoint it takes the body of the Request
+ *              and look for a coincidence in the database if an user is not found, adds the user to the database
+ *              and resolves a the JWT, otherwise it stops the operation and answers with an Error
+ * @param req
+ * @param res
+ * @returns
+ */
 const create = async (req: express.Request, res: express.Response) => {
   try {
     const userFinded = await User.find(req.body.email);
@@ -76,6 +91,13 @@ const create = async (req: express.Request, res: express.Response) => {
   }
 };
 
+/**
+ * @description This function is the final action of renew endpoint it takes the body of the Request
+ *              and generates the new JWT.
+ * @param req
+ * @param res
+ * @returns
+ */
 const renewToken = async (req: express.Request, res: express.Response) => {
   const { uid, name } = req.body;
   try {

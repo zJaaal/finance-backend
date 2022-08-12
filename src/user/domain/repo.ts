@@ -1,6 +1,11 @@
 import client from "../../database/knex";
 import { UserRegister } from "../validations/types";
 
+/**
+ * @description This function retrieve one user from the database
+ * @param {string} email
+ * @returns the found user
+ */
 const find = (email: string) =>
   client
     .select()
@@ -10,6 +15,11 @@ const find = (email: string) =>
     })
     .first();
 
+/**
+ * @description This function adds an user to the database
+ * @param {UserRegister} user
+ * @returns the created user
+ */
 const create = (user: UserRegister) =>
   client
     .insert({ ...user })
