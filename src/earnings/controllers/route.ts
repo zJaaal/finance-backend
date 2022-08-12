@@ -1,9 +1,10 @@
 import express from "express";
 import { EarningController } from ".";
 import { Middlewares } from "../../middlewares/index";
+import { JoiAlter } from "../../types/JoiAlter";
 import {
-  earningIds as earningIdsSchema,
-  earningListPerPage as earningListPerPageSchema,
+  earningIdsSchema,
+  earningListPerPageSchema,
   earningSchema,
 } from "../validations/schemas";
 import { Earning, EarningIds, EarningListPerPage } from "../validations/types";
@@ -23,7 +24,7 @@ earning.get(
 
 earning.put(
   "/",
-  Middlewares.validateSchemas<Earning>(earningSchema),
+  Middlewares.validateSchemas<Earning>(earningSchema, JoiAlter.put),
   EarningController.update
 );
 
