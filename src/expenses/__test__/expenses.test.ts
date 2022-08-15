@@ -1,7 +1,7 @@
 import { DateUtils } from "../../utils/date";
 import { Expenses } from "../domain";
 import { Expense, ExpenseIds } from "../validations/types";
-const should = require("chai").should();
+
 const expect = require("chai").expect;
 
 const keyword = "expense";
@@ -12,9 +12,9 @@ const expenseIdsToUpdate: ExpenseIds = {
 };
 const expenseIdsToDelete: ExpenseIds = {
   iduser: 9,
-  idexpense: 24,
+  idexpense: 26,
 };
-const expensePut: Expense = {
+const expenseToUpdate: Expense = {
   idexpense: 21,
   iduser: 9,
   title: "Test Expense change",
@@ -22,7 +22,7 @@ const expensePut: Expense = {
   date: date,
   amount: Date.now(),
 };
-const expensePost: Expense = {
+const expenseToAdd: Expense = {
   idexpense: undefined,
   iduser: 9,
   title: "Test Expense",
@@ -33,16 +33,20 @@ const expensePost: Expense = {
 
 describe("Expenses Module", () => {
   it("Should create one expense", async () => {
-    const newExpense = await Expenses.create(expensePost);
-    newExpense.should.have.property("idexpense");
+    const newExpense = await Expenses.create(expenseToAdd);
+
+    expenseIdsToDelete.idexpense = newExpense.idexpense;
+    expenseIdsToDelete.iduser = newExpense.iduser;
+
+    expect(newExpense).to.have.property("idexpense");
   }),
-    it("Should update one expense from de DB", async () => {
+    it("Should update one expense from the DB", async () => {
       const expenseToEdit = await Expenses.find(expenseIdsToUpdate);
-      await Expenses.update(expensePut);
+      await Expenses.update(expenseToUpdate);
       const editedExpense = await Expenses.find(expenseIdsToUpdate);
       expect(
         expenseToEdit,
-        "Please be sure to fill editedExpense with different data"
+        "Please be sure to fill expenseToUpdate with different data"
       ).to.be.deep.not.equal(editedExpense);
     }),
     it("Should list all expenses per page for one user ID", async () => {
