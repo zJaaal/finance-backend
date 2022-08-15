@@ -27,6 +27,35 @@ const create = async (req: express.Request, res: express.Response) => {
 };
 
 /**
+ * @description This function is the final action of find endpoint it
+ *              takes the body of the Request to search for an expense
+ * @param req
+ * @param res
+ * @returns
+ */
+const find = async (req: express.Request, res: express.Response) => {
+  try {
+    const expense: Expense = await Expenses.find(req.body);
+    if (!expense)
+      res.status(400).json({
+        status: "Error",
+        ErrorMessage: "Couldn't find any expense",
+      });
+    else
+      res.status(201).json({
+        status: "Completed",
+        ...expense,
+      });
+  } catch (error) {
+    console.log(error);
+    res.status(400).json({
+      status: "Error",
+      ErrorMessage: "Please contact an admin.",
+    });
+  }
+};
+
+/**
  * @description This function takes the request body to retrieve a list of
  *               coincidences on expenses table based on the filters
  * @param req
@@ -119,6 +148,7 @@ const erase = async (req: express.Request, res: express.Response) => {
 
 export const ExpenseController = {
   create,
+  find,
   listPerPage,
   update,
   erase,

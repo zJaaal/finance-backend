@@ -1,5 +1,5 @@
 import { EarningIds } from "../../earnings/validations/types";
-import { Helpers } from "../../helpers";
+import { DateUtils } from "../../utils/date";
 import { Expense, ExpenseIds } from "../validations/types";
 import { ExpenseRepository } from "./repo";
 
@@ -12,11 +12,19 @@ import { ExpenseRepository } from "./repo";
 const create = (expense: Expense) => {
   expense = {
     ...expense,
-    date: Helpers.formatDateToISO(expense.date),
+    date: DateUtils.formatDateToISO(expense.date),
   };
   return ExpenseRepository.create(expense);
 };
-
+/**
+ * @description This function is the validation layer
+ *              for the function of the same name in repo.ts
+ * @param expenseIds
+ * @returns
+ */
+const find = (expenseIds: ExpenseIds) => {
+  return ExpenseRepository.find(expenseIds);
+};
 /**
  * @description This function is the validation layer
  *              for the function of the same name in repo.ts
@@ -33,7 +41,7 @@ const listPerPage = (
   keyword: string = "",
   date: string = ""
 ) => {
-  if (date.length) date = Helpers.formatDateToISO(date);
+  if (date.length) date = DateUtils.formatDateToISO(date);
 
   return ExpenseRepository.listPerPage(iduser, page, keyword, date);
 };
@@ -48,7 +56,7 @@ const listPerPage = (
 const update = (expense: Expense) => {
   expense = {
     ...expense,
-    date: Helpers.formatDateToISO(expense.date),
+    date: DateUtils.formatDateToISO(expense.date),
   };
   return ExpenseRepository.update(expense);
 };
@@ -64,6 +72,7 @@ const erase = (expenseIds: ExpenseIds) => {
 
 export const Expenses = {
   create,
+  find,
   listPerPage,
   update,
   erase,

@@ -24,6 +24,21 @@ const create = (expense: Expense) =>
     );
 
 /**
+ * @description This function retrieves one expense that matches the idexpense
+ * @param idexpense
+ * @returns
+ */
+const find = (expenseIds: ExpenseIds) =>
+  client
+    .select()
+    .from("expenses")
+    .where({
+      idexpense: expenseIds.idexpense,
+      iduser: expenseIds.iduser,
+    })
+    .first();
+
+/**
  * @description This function retrieves a list of expenses based on filters
  * @param {number} iduser //Identity of user
  * @param {number} page //# of page he is on
@@ -107,6 +122,7 @@ const erase = (expenseIds: ExpenseIds) =>
 
 export const ExpenseRepository = {
   create,
+  find,
   listPerPage,
   update,
   erase,

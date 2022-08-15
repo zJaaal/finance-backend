@@ -18,6 +18,13 @@ expense.post(
   ExpenseController.create
 );
 
+//Initializtion of find endpoint
+expense.get(
+  "/find",
+  Middlewares.validateSchemas<ExpenseIds>(expenseIdsSchema),
+  ExpenseController.find
+);
+
 //Initialization of listPerPage endpoint
 expense.get(
   "/",
