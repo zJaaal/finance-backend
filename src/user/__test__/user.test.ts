@@ -8,7 +8,7 @@ const registerUser: UserRegister = {
   password: "Abcd1234%",
 };
 
-const newEmail = "jalinsonz@gmail.com";
+const newEmail = `jalinson${Date.now()}}@gmail.com`;
 
 describe("User Module", () => {
   it("Should return the created user", async () => {
@@ -24,17 +24,20 @@ describe("User Module", () => {
       const user = await User.find("asdasdas@gmail.com");
       should.not.exist(user);
     });
-  // it("Should create an user if it doesn't exist", async () => {
-  //   const user = await User.find(newEmail);
-  //   if (!user) {
-  //     const newUser = await User.create({
-  //       username: "Jal",
-  //       email: newEmail,
-  //       password: "Abcd1234%",
-  //     });
-  //     newUser.should.have.property("iduser");
-  //   } else {
-  //     should.not.exist(user);
-  //   }
-  // });
+  it("Should create an user if it doesn't exist", async () => {
+    const user = await User.find(newEmail);
+    if (!user) {
+      const newUser = await User.create({
+        username: "Jal",
+        email: newEmail,
+        password: "Abcd1234%",
+      });
+      newUser.should.have.property("iduser");
+    } else {
+      should.not.exist(
+        user,
+        "Please be sure to change the newEmail field to a email that doesn't exist in the database"
+      );
+    }
+  });
 });
