@@ -1,4 +1,4 @@
-import { Helpers } from "../../helpers";
+import { DateUtils } from "../../utils/date";
 import { Earning, EarningIds } from "../validations/types";
 import { EarningRepository } from "./repo";
 
@@ -11,7 +11,7 @@ import { EarningRepository } from "./repo";
 const create = (earning: Earning) => {
   earning = {
     ...earning,
-    date: Helpers.formatDateToISO(earning.date),
+    date: DateUtils.formatDateToISO(earning.date),
   };
   return EarningRepository.create(earning);
 };
@@ -33,7 +33,7 @@ const listPerPage = (
   date: string = ""
 ) => {
   if (date.length) {
-    date = Helpers.formatDateToISO(date);
+    date = DateUtils.formatDateToISO(date);
   }
 
   return EarningRepository.listPerPage(iduser, page, keyword, date);
@@ -49,7 +49,7 @@ const listPerPage = (
 const update = (earning: Earning) => {
   earning = {
     ...earning,
-    date: Helpers.formatDateToISO(earning.date),
+    date: DateUtils.formatDateToISO(earning.date),
   };
   return EarningRepository.update(earning);
 };

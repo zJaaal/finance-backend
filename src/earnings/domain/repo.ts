@@ -22,7 +22,6 @@ const create = (earning: Earning) =>
         })
         .first()
     );
-
 /**
  * @description This function retrieves a list of earnings based on filters
  * @param {number} iduser //Identity of user
