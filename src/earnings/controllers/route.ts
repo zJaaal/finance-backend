@@ -18,6 +18,13 @@ earning.post(
   EarningController.create
 );
 
+//Initialization of find endpoint
+earning.get(
+  "/find",
+  Middlewares.validateSchemas<EarningIds>(earningIdsSchema),
+  EarningController.find
+);
+
 //Initialization of listPerPage endpoint
 earning.get(
   "/",

@@ -19,6 +19,16 @@ const create = (earning: Earning) => {
 /**
  @description This function is the validation layer
  *            for the function of the same name in repo.ts
+ * @param earningIds
+ * @returns
+ */
+const find = (earningIds: EarningIds) => {
+  return EarningRepository.find(earningIds);
+};
+
+/**
+ @description This function is the validation layer
+ *            for the function of the same name in repo.ts
  *            In this case transforms the date to a valid MySQL date
  * @param iduser
  * @param page
@@ -66,6 +76,7 @@ const erase = (earningIds: EarningIds) => {
 
 export const Earnings = {
   create,
+  find,
   listPerPage,
   update,
   erase,

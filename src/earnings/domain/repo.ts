@@ -22,6 +22,21 @@ const create = (earning: Earning) =>
         })
         .first()
     );
+
+/**
+ * @description This function retrieves one earning that matches the ids
+ * @param earningIds
+ * @returns
+ */
+const find = (earningIds: EarningIds) =>
+  client
+    .select()
+    .from("earnings")
+    .where({
+      iduser: earningIds.iduser,
+      idearnings: earningIds.idearnings,
+    })
+    .first();
 /**
  * @description This function retrieves a list of earnings based on filters
  * @param {number} iduser //Identity of user
@@ -99,6 +114,7 @@ const erase = (earningIds: EarningIds) =>
 
 export const EarningRepository = {
   create,
+  find,
   listPerPage,
   update,
   erase,

@@ -27,6 +27,36 @@ const create = async (req: express.Request, res: express.Response) => {
 };
 
 /**
+ * @description This function takes the request body to find an Earning
+ *              if it doesn't find any earning with the information provided
+ *              it will resolves a 404
+ * @param req
+ * @param res
+ * @returns
+ */
+const find = async (req: express.Request, res: express.Response) => {
+  try {
+    const expense = await Earnings.find(req.body);
+
+    if (!expense) {
+      res.status(404).json({
+        status: "Couldn't find any Earning.",
+      });
+    } else
+      res.status(200).json({
+        status: "Completed",
+        ...expense,
+      });
+  } catch (error) {
+    console.log(error);
+    res.status(400).json({
+      status: "Error",
+      ErrorMessage: "Please contact an admin.",
+    });
+  }
+};
+
+/**
  * @description This function takes the request body to retrieve a list of
  *               coincidences on earnings table based on the filters
  * @param req
@@ -92,7 +122,7 @@ const update = async (req: express.Request, res: express.Response) => {
 /**
  * @description This function takes the request body to delete an Earning
  *              if it doesn't find any earning with the information provided
- *              it will resolver a 404
+ *              it will resolves a 404
  * @param req
  * @param res
  * @returns
@@ -119,6 +149,7 @@ const erase = async (req: express.Request, res: express.Response) => {
 };
 export const EarningController = {
   create,
+  find,
   listPerPage,
   update,
   erase,
