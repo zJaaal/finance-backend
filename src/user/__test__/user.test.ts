@@ -1,7 +1,6 @@
 import { User } from "../domain";
 import { UserRegister } from "../validations/types";
 const should = require("chai").should();
-const expect = require("chai").expect();
 
 const registerUser: UserRegister = {
   username: "Jal",
@@ -9,7 +8,7 @@ const registerUser: UserRegister = {
   password: "Abcd1234%",
 };
 
-const newEmail = "jalinsono@gmail.com";
+const newEmail = "jalinsonz@gmail.com";
 
 describe("User Module", () => {
   it("Should return the created user", async () => {
@@ -22,20 +21,20 @@ describe("User Module", () => {
       should.exist(user);
     }),
     it("Should not return a valid user", async () => {
-      const user = await User.find("jalinsonz@gmail.com");
+      const user = await User.find("asdasdas@gmail.com");
       should.not.exist(user);
-    }),
-    it("Should create an user if it doesn't exist", async () => {
-      const user = await User.find(newEmail);
-      if (!user) {
-        const newUser = await User.create({
-          username: "Jal",
-          email: newEmail,
-          password: "Abcd1234%",
-        });
-        newUser.should.have.property("iduser");
-      } else {
-        should.not.exist(user);
-      }
     });
+  // it("Should create an user if it doesn't exist", async () => {
+  //   const user = await User.find(newEmail);
+  //   if (!user) {
+  //     const newUser = await User.create({
+  //       username: "Jal",
+  //       email: newEmail,
+  //       password: "Abcd1234%",
+  //     });
+  //     newUser.should.have.property("iduser");
+  //   } else {
+  //     should.not.exist(user);
+  //   }
+  // });
 });
